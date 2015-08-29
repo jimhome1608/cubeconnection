@@ -10,6 +10,14 @@ namespace CubeConnection
     class LedCube : Led
     {
         SerialPort serial_port;
+        Led all_leds;
+
+        public LedCube() // constructor for LedCube Object
+        {
+            all_leds = new Led();
+            all_leds.x = 4;
+
+        }
 
         public void upload ()
         {
@@ -18,23 +26,21 @@ namespace CubeConnection
 
         public void all_off()
         {
-            x = 4;
-            set_colour("black");
-            upload();
+            all_leds.set_colour("black");
+            serial_port.Write(all_leds.cmd());
         }
 
         public void all_colour(int r,int g,int b)
         {
-            x = 4;
-            set_colour(r,g,b);
-            upload();
+            all_leds.set_colour(r,g,b);
+            serial_port.Write(all_leds.cmd());
         }
 
         public void all_colour(String color_name)
         {
             x = 4;
-            set_colour(color_name);
-            upload();
+            all_leds.set_colour(color_name);
+            serial_port.Write(all_leds.cmd());
 
         }
 
