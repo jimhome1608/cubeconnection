@@ -22,3 +22,9 @@ C:\jim\cubeconnection\CubeConnection\obj\Debug\CubeConnection.pdb
 C:\jim\cubeconnection\CubeConnection\bin\Debug\CubeConnection.exe
 C:\jim\cubeconnection\CubeConnection\bin\Debug\CubeConnection.pdb
 C:\jim\cubeconnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
+C:\Development\cubeconnection\CubeConnection\bin\Debug\CubeConnection.exe.config
+C:\Development\cubeconnection\CubeConnection\obj\Debug\CubeConnection.exe
+C:\Development\cubeconnection\CubeConnection\obj\Debug\CubeConnection.pdb
+C:\Development\cubeconnection\CubeConnection\bin\Debug\CubeConnection.exe
+C:\Development\cubeconnection\CubeConnection\bin\Debug\CubeConnection.pdb
+C:\Development\cubeconnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
