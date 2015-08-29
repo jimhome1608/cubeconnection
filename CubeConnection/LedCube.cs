@@ -16,7 +16,6 @@ namespace CubeConnection
         {
             all_leds = new Led();
             all_leds.x = 4;
-
         }
 
         public void upload ()
