@@ -15,7 +15,6 @@ namespace CubeConnection
 
         static void Main(string[] args)
         {
-
             LedCube led_cube = new LedCube();
 
             if (!led_cube.open()) 
