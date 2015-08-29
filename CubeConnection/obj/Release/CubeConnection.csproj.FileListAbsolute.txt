@@ -1,0 +1,5 @@
+C:\Max\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.exe.config
+C:\Max\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.exe
+C:\Max\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.pdb
+C:\Max\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.exe
+C:\Max\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.pdb
