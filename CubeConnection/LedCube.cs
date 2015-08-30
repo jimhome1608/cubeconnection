@@ -37,7 +37,6 @@ namespace CubeConnection
 
         public void all_colour(String color_name)
         {
-            x = 4;
             all_leds.set_colour(color_name);
             serial_port.Write(all_leds.cmd());
 
