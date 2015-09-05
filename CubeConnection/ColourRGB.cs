@@ -28,6 +28,23 @@ namespace CubeConnection
             return "red:" + red.ToString() + " green:" + green.ToString() + "  blue:" + blue.ToString();
         }
 
+        public bool has_colour()
+        {
+            if (red != 0)
+            {
+                return true;
+            }
+            if (green != 0)
+            {
+                return true;
+            }
+            if (blue != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         public bool add_colour(int r, int g, int b)
         {

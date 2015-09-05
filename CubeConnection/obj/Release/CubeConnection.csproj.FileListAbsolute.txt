@@ -3,3 +3,9 @@ C:\Max\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.exe
 C:\Max\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.pdb
 C:\Max\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.exe
 C:\Max\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.pdb
+C:\dylan\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.exe.config
+C:\dylan\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.exe
+C:\dylan\Development\CubeConnection\CubeConnection\bin\Release\CubeConnection.pdb
+C:\dylan\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.exe
+C:\dylan\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.pdb
+C:\dylan\Development\CubeConnection\CubeConnection\obj\Release\CubeConnection.csprojResolveAssemblyReference.cache

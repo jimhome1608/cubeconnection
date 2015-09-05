@@ -18,6 +18,13 @@ namespace CubeConnection
             y = _y;
             z = _z;
         }
+        public void random_address()
+        {
+            Random rnd = new Random();
+            x = rnd.Next(0, 4);
+            y = rnd.Next(0, 4);
+            z = rnd.Next(0, 4);
+        }
 
         public  string cmd()
         {
