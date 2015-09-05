@@ -12,12 +12,74 @@ namespace CubeConnection
         public int y = 0;
         public int z = 0;
 
+        public int up(int jump_size)
+        {
+
+            z = z + jump_size;
+            if (z > 3)
+            {
+                z = 3;
+            }
+            return z;
+        }
+        public int down(int jump_size)
+        {
+
+            z = z - jump_size;
+            if (z < 0)
+            {
+                z = 0;
+            }
+            return z;
+        }
+        public int right(int jump_size)
+        {
+
+            x = x + jump_size;
+            if (x > 3)
+            {
+                x = 3;
+            }
+            return x;
+        }
+        public int left(int jump_size)
+        {
+
+            x = x - jump_size;
+            if (x < 0)
+            {
+                x = 0;
+            }
+            return x;
+        }
+        public int back(int jump_size)
+        {
+
+            y = y + jump_size;
+            if (y > 3)
+            {
+                y = 3;
+            }
+            return y;
+        }
+        public int forward(int jump_size)
+        {
+
+            y = y - jump_size;
+            if (y < 0)
+            {
+                y = 0;
+            }
+            return y;
+        }
+
         public void set_address(int _x, int _y, int _z)
         {
             x = _x;
             y = _y;
             z = _z;
         }
+
         public void random_address()
         {
             Random rnd = new Random();

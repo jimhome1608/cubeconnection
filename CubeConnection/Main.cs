@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Threading;
+using System.Speech.Synthesis;
 
 namespace CubeConnection
 {
@@ -18,6 +19,12 @@ namespace CubeConnection
             LedCube led_cube = new LedCube();
             if (!led_cube.open()) 
                 return;
+
+            int score = 0;
+
+            SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+            synthesizer.Volume = 100;  // 0...100
+            synthesizer.Rate = -2;     // -10...10
 
             Console.WriteLine("Connected OK");
 
@@ -90,17 +97,33 @@ namespace CubeConnection
                 {
                     if (led_cube.hit_target())
                     {
+                        score++;
+                        synthesizer.SpeakAsync("Player wins. You're score is " + score);
                         Console.WriteLine("You Win");
                         led_cube.all_colour("sky blue");
                         Thread.Sleep(500);
                         led_cube.all_colour(0, 0, 0);
-                        led_cube.target_led.random_address();
+                        led_cube.reset_target_led();
                         led_cube.target_led.set_colour("blue");
                         led_cube.all_colour(BACKGROUND_COLOUR);
                         led_cube.upload();
                     }
+                    else
+                    {
+                        score--;
+                        synthesizer.SpeakAsync("Player looses. You're score is " + score);
+                        Console.WriteLine("You Loose");
+                        led_cube.all_colour(102, 51, 0);
+                        Thread.Sleep(500);
+                        led_cube.all_colour(0, 0, 0);
+                        led_cube.reset_target_led();
+                        led_cube.target_led.set_colour("blue");
+                        led_cube.all_colour(BACKGROUND_COLOUR);
+                        led_cube.upload();
+                        // Synchronous
+                    }
+                    Console.WriteLine("youre score is " + score);
                 }
-
                
             }
             led_cube.all_off();
