@@ -25,46 +25,111 @@ namespace CubeConnection
 
         }
 
-        public void reset_target_led()
+        public void reset_target_led(int how_many_steps)
         {
+            // no backtracking.  If go forward next move not back, etc.
+            // 
+            const int UP =      0;
+            const int DOWN =    1;
+            const int LEFT =    2;
+            const int RIGHT =   3;
+            const int FORWARD = 4;
+            const int BACK =    5;
             int idx = 0;
             Random rnd = new Random();
             target_led.set_colour("blue");
-            int d = rnd.Next(0, 6);
-            while (idx < 20)
+            int previous_move = 0;
+            int move = rnd.Next(0, 6);
+            while (idx < how_many_steps)
             {
                 idx++;
                 if (idx % 2 == 0)
                 {
-                    d = rnd.Next(0, 6);
+                    move = rnd.Next(0, 6);
                 }
-                if (d == 0)
+                if (move == UP)
                 {
-                    target_led.up(1);
+                    if (!target_led.up(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move  == DOWN)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+
                 }
-                if (d == 1)
+                if (move == DOWN)
                 {
-                    target_led.down(1);
+                    if (!target_led.down(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == UP)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
                 }
-                if (d == 2)
+                if (move == LEFT)
                 {
-                    target_led.left(1);
+                    if (!target_led.left(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == RIGHT)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
                 }
-                if (d == 3)
+                if (move == RIGHT)
                 {
-                    target_led.right(1);
+                    if (!target_led.right(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == LEFT)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
                 }
-                if (d == 4)
+                if (move == FORWARD)
                 {
-                    target_led.forward(1);
+                    if (!target_led.forward(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == BACK)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
                 }
-                if (d == 5)
+                if (move == BACK)
                 {
-                    target_led.back(1);
+                    if (!target_led.back(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == FORWARD)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
                 }
                 all_off();
                 serial_port.Write(target_led.cmd());
-                Thread.Sleep(50);
+                previous_move = move;
+                Thread.Sleep(100);
             }
         }
 
@@ -126,7 +191,7 @@ namespace CubeConnection
         {
             serial_port = new SerialPort();
             //good to enahce so searches for Cube COM3, COM4, etc, etc.
-            serial_port.PortName = "COM3";
+            serial_port.PortName = "COM7";
             serial_port.BaudRate = 38400;
             try
             {

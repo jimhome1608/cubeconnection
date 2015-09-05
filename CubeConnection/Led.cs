@@ -12,65 +12,71 @@ namespace CubeConnection
         public int y = 0;
         public int z = 0;
 
-        public int up(int jump_size)
+        public bool up(int jump_size)
         {
-
             z = z + jump_size;
             if (z > 3)
             {
                 z = 3;
+                return false;
             }
-            return z;
+            return true;
         }
-        public int down(int jump_size)
+        public bool down(int jump_size)
         {
 
             z = z - jump_size;
             if (z < 0)
             {
                 z = 0;
+                return false;
             }
-            return z;
+            return true;
         }
-        public int right(int jump_size)
+        public bool right(int jump_size)
         {
 
             x = x + jump_size;
             if (x > 3)
             {
                 x = 3;
+                return false;
             }
-            return x;
+            return true;
         }
-        public int left(int jump_size)
+        public bool left(int jump_size)
         {
 
             x = x - jump_size;
             if (x < 0)
             {
                 x = 0;
+                return false;
             }
-            return x;
+            return true;
         }
-        public int back(int jump_size)
+        public bool back(int jump_size)
         {
 
             y = y + jump_size;
             if (y > 3)
             {
                 y = 3;
+                return false;
             }
-            return y;
+            return true;
         }
-        public int forward(int jump_size)
+
+        public bool forward(int jump_size)
         {
 
             y = y - jump_size;
             if (y < 0)
             {
                 y = 0;
+                return false;
             }
-            return y;
+            return true;
         }
 
         public void set_address(int _x, int _y, int _z)
