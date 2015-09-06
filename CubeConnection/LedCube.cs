@@ -191,20 +191,48 @@ namespace CubeConnection
         {
             serial_port = new SerialPort();
             //good to enahce so searches for Cube COM3, COM4, etc, etc.
-            serial_port.PortName = "COM7";
+            serial_port.PortName = "COM3";
             serial_port.BaudRate = 38400;
-            try
+            serial_port.RtsEnable = true;
+            serial_port.ReadTimeout = 500;
+            bool temp_result = false;
+            for (int comport_number = 3; comport_number < 10; comport_number++)
             {
-                serial_port.Open();
+                serial_port.Close();
+                serial_port.PortName = "COM" + comport_number.ToString();
+                try
+                {
+                    Console.WriteLine("==================================================");
+                    Console.WriteLine("Try connect Cube on COM" + comport_number.ToString());
+                    serial_port.Open();
+                    Console.WriteLine("Open Port OK: waiting for  {whoareyou} responce ");
+                    serial_port.Write("{whoareyou}");
+                    // serial_port.Write("{000FF00FF}");
+                    Thread.Sleep(250); // have to wait for responce from cube
+                    String reply_from_cube = serial_port.ReadExisting();
+                    Console.WriteLine("reply from device");
+                    Console.Write(reply_from_cube);
+                    if (reply_from_cube.IndexOf("cubeofleds") < 0)
+                    {
+                        Console.WriteLine("this is not the cube");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cube Found: OK");
+                        temp_result = true;
+                        break;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Connection: FAILED");
+                    Console.WriteLine(ex.Message);
+                }
+
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Connection: FAILED");
-                Console.WriteLine(ex.Message);
-                Console.ReadLine();
-                return false;
-            }
-            return true;
+            Console.WriteLine("==================================================");
+            return temp_result;
         }
 
     }

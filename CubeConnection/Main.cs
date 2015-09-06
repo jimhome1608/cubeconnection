@@ -17,8 +17,11 @@ namespace CubeConnection
         static void Main(string[] args)
         {
             LedCube led_cube = new LedCube();
-            if (!led_cube.open()) 
+            if (!led_cube.open())
+            {
+                Console.ReadKey();
                 return;
+            }
 
             int score = 0;
 
