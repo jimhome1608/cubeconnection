@@ -1,0 +1,55 @@
+﻿
+09/06/2015
+Jim  the cube will return a "cubeofleds" reply from a  "{whoareyou}" command.
+So we can try different comports until cube detected and will work on both computers
+had some problems with SerialPort.
+The RtsEnable seemed to be false by default and had to code to true
+also hand coded the ReadTimeOut to 0.5 seconds.
+ALl working OK now
+Need to do in master branch.
+
+
+
+ LedCube led_cube = new LedCube();
+            if (!led_cube.open())
+            {
+                Console.ReadKey();
+                return;
+            } 
+
+ public bool open()
+        {
+            serial_port = new SerialPort();
+            //good to enahce so searches for Cube COM3, COM4, etc, etc.
+            serial_port.PortName = "COM3";
+            serial_port.BaudRate = 38400;
+            serial_port.RtsEnable = true;
+            serial_port.ReadTimeout = 500;
+            try
+            {
+                serial_port.Open();
+                serial_port.Write("{whoareyou}");
+                serial_port.Write("{000FF00FF}");
+                String reply_from_cube = serial_port.ReadExisting();
+                Console.WriteLine("reply from device");
+                Console.WriteLine(reply_from_cube);
+                if (reply_from_cube.IndexOf("cubeofleds") < 0 )
+                {
+                    Console.WriteLine("this is not the cube");
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Cube Found: OK");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Connection: FAILED");
+                Console.WriteLine(ex.Message);
+                Console.ReadLine();
+                return false;
+            }
+            return true;
+        }
