@@ -32,7 +32,7 @@ namespace CubeConnection
             Console.WriteLine("Connected OK");
 
             const String BACKGROUND_COLOUR = "BLACK";
-            led_cube.reset_target_led(100);
+            led_cube.reset_target_led(64);
             led_cube.all_colour(BACKGROUND_COLOUR);
             led_cube.set_colour("red");
             led_cube.target_led.set_colour("blue");
@@ -106,7 +106,7 @@ namespace CubeConnection
                         led_cube.all_colour("sky blue");
                         Thread.Sleep(500);
                         led_cube.all_colour(0, 0, 0);
-                        led_cube.reset_target_led(100);
+                        led_cube.reset_target_led(64);
                         led_cube.target_led.set_colour("blue");
                         led_cube.all_colour(BACKGROUND_COLOUR);
                         led_cube.upload();
@@ -120,7 +120,7 @@ namespace CubeConnection
                         led_cube.all_colour(102, 51, 0);
                         Thread.Sleep(500);
                         led_cube.all_colour(0, 0, 0);
-                        led_cube.reset_target_led(100);
+                        led_cube.reset_target_led(64);
                         led_cube.target_led.set_colour("blue");
                         led_cube.all_colour(BACKGROUND_COLOUR);
                         led_cube.upload();
