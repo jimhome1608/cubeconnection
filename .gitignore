@@ -1,0 +1,8 @@
+*.exe
+*.exe
+CubeConnection/bin/Release/CubeConnection.exe
+*.pdb
+*.pdb
+CubeConnection/bin/Debug/CubeConnection.pdb
+*.exe
+*.pdb

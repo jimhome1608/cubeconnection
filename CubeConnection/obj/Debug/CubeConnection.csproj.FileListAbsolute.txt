@@ -10,12 +10,8 @@ C:\Max\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.csproj
 \\JACK2-PC\Users\Shared\Max\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.exe
 \\JACK2-PC\Users\Shared\Max\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.pdb
 \\JACK2-PC\Users\Shared\Max\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
-C:\dylan\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.exe.config
-C:\dylan\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.exe
 C:\dylan\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.pdb
-C:\dylan\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.exe
 C:\dylan\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.pdb
-C:\dylan\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
 C:\jim\cubeconnection\CubeConnection\bin\Debug\CubeConnection.exe.config
 C:\jim\cubeconnection\CubeConnection\obj\Debug\CubeConnection.exe
 C:\jim\cubeconnection\CubeConnection\obj\Debug\CubeConnection.pdb
@@ -28,3 +24,7 @@ C:\Development\cubeconnection\CubeConnection\obj\Debug\CubeConnection.pdb
 C:\Development\cubeconnection\CubeConnection\bin\Debug\CubeConnection.exe
 C:\Development\cubeconnection\CubeConnection\bin\Debug\CubeConnection.pdb
 C:\Development\cubeconnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
+C:\dylan\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.csprojResolveAssemblyReference.cache
+C:\dylan\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.exe.config
+C:\dylan\Development\CubeConnection\CubeConnection\bin\Debug\CubeConnection.exe
+C:\dylan\Development\CubeConnection\CubeConnection\obj\Debug\CubeConnection.exe

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CubeConnection
 {
-    class Led : ColourRGB
+    public class Led : ColourRGB
     {
         public int x = 0;
         public int y = 0;

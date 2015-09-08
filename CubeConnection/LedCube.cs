@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace CubeConnection
 {
-    class LedCube : Led
+    public class LedCube : Led
     {
         SerialPort serial_port;
         Led all_leds;

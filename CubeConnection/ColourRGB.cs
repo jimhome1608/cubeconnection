@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CubeConnection
 {
-    class ColourRGB
+    public class ColourRGB
     {
 
        public int red = 0;
