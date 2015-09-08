@@ -6,3 +6,6 @@ CubeConnection/bin/Release/CubeConnection.exe
 CubeConnection/bin/Debug/CubeConnection.pdb
 *.exe
 *.pdb
+*.exe
+CubeConnection/bin/Debug/CubeConnection.pdb
+*.exe
