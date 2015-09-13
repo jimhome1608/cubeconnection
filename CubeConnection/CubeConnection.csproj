@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="CubeBlueTooth01.ino" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArduinoSourceCodeCube.txt" />
