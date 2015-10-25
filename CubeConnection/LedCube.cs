@@ -35,6 +35,7 @@ namespace CubeConnection
                 _led.blue =255;
                 push_to_hardware();
                 Thread.Sleep(1000);
+                clear();
             }
             
         }
@@ -44,6 +45,11 @@ namespace CubeConnection
             leds.x_line(y, z);
             push_to_hardware();
             return true;
+        }
+
+        public void clear()
+        {
+            leds.clear();
         }
 
 

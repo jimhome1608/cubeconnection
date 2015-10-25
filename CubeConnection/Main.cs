@@ -22,7 +22,7 @@ namespace CubeConnection
                 return;
             }
             //play_game();
-            led_cube.x_line(2, 2);
+            led_cube.x_line(2, 2);            
             led_cube.random_colors();
             //led_cube.rain(500);
             Console.ReadKey();

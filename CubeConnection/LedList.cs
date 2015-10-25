@@ -31,6 +31,14 @@ namespace CubeConnection
             current_led = led_by_address(0, 0, 0);
         }
 
+        public void clear()
+        {
+            for (int l = 0; l <64; l++)
+            {
+                leds[l].turn_off();
+            }
+        }
+
         public Boolean x_line(int y, int z)
         {
             if (move_to(0, y, z) == null)
