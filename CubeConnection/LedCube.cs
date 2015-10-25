@@ -14,12 +14,11 @@ namespace CubeConnection
 
         SerialPort serial_port;
         Led all_leds;
-        LedList leds;
+        public LedList leds = new LedList();
 
 
        public LedCube()
         {
-            leds = new LedList();
             all_leds = new Led();
             all_leds.x = ALL_LEDS_X;
         }
@@ -27,17 +26,13 @@ namespace CubeConnection
 
         public void random_colors()
         {
-            Led _led;
-            Random rnd = new Random();
-            for (int x=0; x< 4; x++)
+            for (int l=0; l< 64; l++)
             {
-                _led = leds.led_by_address(x, 0, 0);
-                _led.blue =255;
+                leds.leds[l].set_random_color();
                 push_to_hardware();
-                Thread.Sleep(1000);
-                clear();
             }
             
+
         }
 
         public Boolean x_line(int y, int z)

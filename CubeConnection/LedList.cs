@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace CubeConnection
 {
-    class LedList
+    public class LedList
     {
 
         public List<Led> leds = new List<Led>();
         public Led current_led;
+        public ColourRGB current_color;
 
 
         public LedList() // constructor for LedCube Object
@@ -29,6 +30,7 @@ namespace CubeConnection
                 }
             }
             current_led = led_by_address(0, 0, 0);
+            current_color = new ColourRGB();
         }
 
         public void clear()
@@ -37,15 +39,86 @@ namespace CubeConnection
             {
                 leds[l].turn_off();
             }
+            current_color.set_colour("black");
         }
+
+        public Boolean make_floor(int z)
+        {
+            if (move_to(0, 0, z) == null)
+                return false;
+            current_led.assign_color(current_color);
+            while (move_right(1))
+                current_led.assign_color(current_color);
+            move_back(1);
+            current_led.assign_color(current_color);
+            while (move_left(1))
+                current_led.assign_color(current_color);
+            move_back(1);
+            current_led.assign_color(current_color);
+            while (move_right(1))
+                current_led.assign_color(current_color);
+            move_back(1);
+            current_led.assign_color(current_color);
+            while (move_left(1))
+                current_led.assign_color(current_color);
+            return true;
+        }
+
+        public Boolean make_wall_x(int x)
+        {
+            if (move_to(x, 0, 0) == null)
+                return false;
+            current_led.assign_color(current_color);
+            while (move_up(1))
+                current_led.assign_color(current_color);
+            move_back(1);
+            current_led.assign_color(current_color);
+            while (move_down(1))
+                current_led.assign_color(current_color);;
+            move_back(1);
+            current_led.assign_color(current_color);
+            while (move_up(1))
+                current_led.assign_color(current_color);;
+            move_back(1);
+            current_led.assign_color(current_color);;
+            while (move_down(1))
+                current_led.assign_color(current_color);;
+            return true;
+        }
+
+        public Boolean make_wall_y(int y)
+        {
+            if (move_to(0, y, 0) == null)
+                return false;
+             current_led.assign_color(current_color);;
+            while (move_right(1))
+                current_led.assign_color(current_color);;
+            move_up(1);
+            current_led.assign_color(current_color);;
+            while (move_left(1))
+                current_led.assign_color(current_color);;
+            move_up(1);
+            current_led.assign_color(current_color);;
+            while (move_right(1))
+                current_led.assign_color(current_color);;
+            move_up(1);
+            current_led.assign_color(current_color);;
+            while (move_left(1))
+                current_led.assign_color(current_color);;
+            return true;
+        }
+
+
+
+
 
         public Boolean x_line(int y, int z)
         {
             if (move_to(0, y, z) == null)
                 return false;
-            current_led.green = 255;
+            current_led.assign_color(current_color);;
             while (move_right(1))
-                current_led.green = 255;
+                current_led.assign_color(current_color);;
             return true;
 
         }

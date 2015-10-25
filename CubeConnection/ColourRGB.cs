@@ -13,15 +13,20 @@ namespace CubeConnection
        public int green = 0;
        public int blue = 0;
 
-        //public bool has_color
-        //public int adjust_brightness
-        //public int adjust_contrast
-        // new method set_color(String color_name)
-        // with overload set_color(int r, int g, int g)
-        //public override string ToString(){}
-        // make add_red return the value of red so can using like while (colour.add_red(5) < 255)
-        // public random_color and can use random to get random address (x,y,z) too so make random colors on cube.
+        public void assign_color(ColourRGB _rgb)
+        {
+            red = _rgb.red;
+            green = _rgb.green;
+            blue = _rgb.blue;
+        }
 
+        public void set_random_color()
+        {
+            Random rnd = new Random();
+            red =   rnd.Next(0, 255); 
+            green = rnd.Next(0, 255);
+            blue = rnd.Next(0, 255);
+        }
 
         public Boolean has_color()
         {
