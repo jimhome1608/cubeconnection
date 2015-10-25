@@ -12,6 +12,14 @@ namespace CubeConnection
         public int y = 0;
         public int z = 0;
 
+
+
+        public void turn_off()
+        {
+            set_colour("black");
+        }
+        
+
         public bool up(int jump_size)
         {
             z = z + jump_size;
@@ -22,6 +30,7 @@ namespace CubeConnection
             }
             return true;
         }
+
         public bool down(int jump_size)
         {
 
@@ -33,6 +42,7 @@ namespace CubeConnection
             }
             return true;
         }
+
         public bool right(int jump_size)
         {
 
@@ -44,6 +54,7 @@ namespace CubeConnection
             }
             return true;
         }
+
         public bool left(int jump_size)
         {
 
@@ -55,6 +66,7 @@ namespace CubeConnection
             }
             return true;
         }
+
         public bool back(int jump_size)
         {
 

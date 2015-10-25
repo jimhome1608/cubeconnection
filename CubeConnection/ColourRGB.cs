@@ -10,7 +10,7 @@ namespace CubeConnection
     {
 
        public int red = 0;
-        public int green = 0;
+       public int green = 0;
        public int blue = 0;
 
         //public bool has_color
@@ -22,6 +22,14 @@ namespace CubeConnection
         // make add_red return the value of red so can using like while (colour.add_red(5) < 255)
         // public random_color and can use random to get random address (x,y,z) too so make random colors on cube.
 
+
+        public Boolean has_color()
+        {
+            if ( red != 0) return true;
+            if (green != 0) return true;
+            if (blue != 0) return true;
+            return false;
+        }
 
         public override string ToString()
         {

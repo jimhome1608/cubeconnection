@@ -9,133 +9,82 @@ using System.Threading;
 
 namespace CubeConnection
 {
-    public class LedCube : Led
+    public class LedCube
     {
         SerialPort serial_port;
         Led all_leds;
         public Led target_led;
+        public Led user_led;
+        public List<Led> leds = new List<Led>();
 
         public LedCube() // constructor for LedCube Object
         {
             all_leds = new Led();
             all_leds.x = 4;
             target_led = new Led();
-            target_led.set_address(2, 2, 2);
-            target_led.set_colour("blue");
-
-        }
-
-        public void reset_target_led(int how_many_steps)
-        {
-            // no backtracking.  If go forward next move not back, etc.
-            // 
-            const int UP =      0;
-            const int DOWN =    1;
-            const int LEFT =    2;
-            const int RIGHT =   3;
-            const int FORWARD = 4;
-            const int BACK =    5;
-            int idx = 0;
-            Random rnd = new Random();
-            target_led.set_colour("blue");
-            int previous_move = 0;
-            int move = rnd.Next(0, 6);
-            while (idx < how_many_steps)
+            user_led = new Led();
+            for (int x = 0; x < 4; x++)
             {
-                idx++;
-                if (idx % 2 == 0)
+                for (int y = 0; y < 4; y++)
                 {
-                    move = rnd.Next(0, 6);
-                }
-                if (move == UP)
-                {
-                    if (!target_led.up(1))
+                    for (int z = 0; z < 4; z++)
                     {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move  == DOWN)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-
-                }
-                if (move == DOWN)
-                {
-                    if (!target_led.down(1))
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move == UP)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
+                        Led led = new Led();
+                        led.set_address(x, y, z);
+                        leds.Add(led);
                     }
                 }
-                if (move == LEFT)
-                {
-                    if (!target_led.left(1))
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move == RIGHT)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                }
-                if (move == RIGHT)
-                {
-                    if (!target_led.right(1))
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move == LEFT)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                }
-                if (move == FORWARD)
-                {
-                    if (!target_led.forward(1))
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move == BACK)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                }
-                if (move == BACK)
-                {
-                    if (!target_led.back(1))
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                    if (previous_move == FORWARD)
-                    {
-                        move = rnd.Next(0, 6);
-                        continue;
-                    }
-                }
-                all_off();
-                serial_port.Write(target_led.cmd());
-                previous_move = move;
-                Thread.Sleep(100);
             }
         }
 
+        public void random_colors()
+        {
+            Led _led;
+            Random rnd = new Random();
+            for (int l=0; l< 64; l++)
+            {
+                _led = leds[l];
+                _led.blue = rnd.Next(0, 255);
+                _led.green = rnd.Next(0, 255);
+                _led.red = rnd.Next(0, 255);
+            }
+            push_to_hardware();
+        }
+
+        public void rain(int _speed)
+        {
+            Random rnd = new Random();
+            Led drop1 = new Led();
+            Led drop2 = new Led();
+
+            drop1.set_address(rnd.Next(0, 4), rnd.Next(0, 4), 3);
+            drop2.set_address(rnd.Next(0, 4), rnd.Next(0, 4), 3);
+            int i = 0;
+            while(i < 4)
+            {
+                drop1.set_colour("blue");
+                drop2.set_colour("blue");
+                serial_port.Write(drop1.cmd());
+                serial_port.Write(drop2.cmd());
+                Thread.Sleep(_speed);
+                drop1.turn_off();
+                drop2.turn_off();
+                serial_port.Write(drop1.cmd());
+                serial_port.Write(drop2.cmd());
+                drop1.down(1);
+                drop2.down(1);
+                i++;
+            }
+            drop1 = null;
+            drop1 = null;
+
+        }
+
+        
+
         public Boolean hit_target()
         {
-            if (x == target_led.x & y == target_led.y & z == target_led.z)
+            if (user_led.x == target_led.x & user_led.y == target_led.y & user_led.z == target_led.z)
             {
                 return true;
             }
@@ -145,9 +94,9 @@ namespace CubeConnection
             }
         }
 
-        public void upload ()
+        public void game_upload ()
         {
-            serial_port.Write(cmd());
+            serial_port.Write(user_led.cmd());
             if (target_led.has_colour())
             {
                  serial_port.Write(target_led.cmd());
@@ -157,6 +106,21 @@ namespace CubeConnection
             }
            
 
+
+        }
+
+        public void push_to_hardware()
+        {
+            String _cmd = "";
+            Led _led;
+            all_leds.set_colour("black");
+            serial_port.Write(all_leds.cmd());
+            for (int x = 0; x < leds.Count; x++)
+            {
+                _led = leds[x];
+                _cmd = _cmd + _led.cmd();
+            }
+            serial_port.Write(_cmd);
 
         }
 
@@ -233,6 +197,114 @@ namespace CubeConnection
             }
             Console.WriteLine("==================================================");
             return temp_result;
+        }
+
+        public void game_reset_target_led(int how_many_steps)
+        {
+            // no backtracking.  If go forward next move not back, etc.
+            // 
+            const int UP = 0;
+            const int DOWN = 1;
+            const int LEFT = 2;
+            const int RIGHT = 3;
+            const int FORWARD = 4;
+            const int BACK = 5;
+            int idx = 0;
+            Random rnd = new Random();
+            target_led.set_colour("blue");
+            int previous_move = 0;
+            int move = rnd.Next(0, 6);
+            while (idx < how_many_steps)
+            {
+                idx++;
+                if (idx % 2 == 0)
+                {
+                    move = rnd.Next(0, 6);
+                }
+                if (move == UP)
+                {
+                    if (!target_led.up(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == DOWN)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+
+                }
+                if (move == DOWN)
+                {
+                    if (!target_led.down(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == UP)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                }
+                if (move == LEFT)
+                {
+                    if (!target_led.left(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == RIGHT)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                }
+                if (move == RIGHT)
+                {
+                    if (!target_led.right(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == LEFT)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                }
+                if (move == FORWARD)
+                {
+                    if (!target_led.forward(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == BACK)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                }
+                if (move == BACK)
+                {
+                    if (!target_led.back(1))
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                    if (previous_move == FORWARD)
+                    {
+                        move = rnd.Next(0, 6);
+                        continue;
+                    }
+                }
+                all_off();
+                serial_port.Write(target_led.cmd());
+                previous_move = move;
+                Thread.Sleep(100);
+            }
         }
 
     }
