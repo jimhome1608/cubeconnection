@@ -12,9 +12,16 @@ namespace CubeConnection
        public int red = 0;
        public int green = 0;
        public int blue = 0;
+       public Boolean color_has_changed = false;
 
         public void assign_color(ColourRGB _rgb)
         {
+            if (red != _rgb.red)
+                color_has_changed = true;
+            if (green != _rgb.green)
+                color_has_changed = true;
+            if (blue != _rgb.blue)
+                color_has_changed = true;
             red = _rgb.red;
             green = _rgb.green;
             blue = _rgb.blue;
@@ -22,6 +29,7 @@ namespace CubeConnection
 
         public void set_random_color()
         {
+            color_has_changed = true;
             Random rnd = new Random();
             red =   rnd.Next(0, 255); 
             green = rnd.Next(0, 255);
@@ -100,6 +108,9 @@ namespace CubeConnection
             if (red < 0)
                 red = 0;
 
+            if (temp_result)
+                color_has_changed = true;
+
             return temp_result;
         }
 
@@ -108,6 +119,12 @@ namespace CubeConnection
 
         public void set_colour(int r, int g, int b)
         {
+            if (red != r)
+                color_has_changed = true;
+            if (green != g)
+                color_has_changed = true;
+            if (blue != b)
+                color_has_changed = true;
             red = r;
             green = g;
             blue = b;
@@ -116,6 +133,8 @@ namespace CubeConnection
 
         public  void set_colour(string colour_name)
         {
+            ColourRGB color_before_change = new ColourRGB();
+            color_before_change.assign_color(this);
             red = 0;
             green = 0;
             blue = 0;
@@ -138,7 +157,13 @@ namespace CubeConnection
                 green = 206;
                 blue = 255;
             }
-           
+            if (red != color_before_change.red)
+                color_has_changed = true;
+            if (green != color_before_change.green)
+                color_has_changed = true;
+            if (blue != color_before_change.blue)
+                color_has_changed = true;
+
         }
 
 
@@ -148,6 +173,7 @@ namespace CubeConnection
             red = 255 - red;
             green = 255 - green;
             blue = 255 - blue;
+            color_has_changed = true;
         }
 
 

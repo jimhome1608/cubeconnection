@@ -23,38 +23,18 @@ namespace CubeConnection
             }
             //play_game();
             //led_cube.leds.make_floor(2);
-            led_cube.random_colors();
+            // led_cube.random_colors();
             //led_cube.push_to_hardware();
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
+            
             while (!Console.KeyAvailable)
-            {            
-                for (int y = 0; y < 4; y++)
-                {
-                    led_cube.leds.current_color.set_colour("red");
-                    led_cube.leds.make_wall_y(y);
-                    led_cube.push_to_hardware();
-                    Thread.Sleep(500);
-                    led_cube.all_off();
-                    led_cube.leds.clear();
-                }
-                for (int x = 0; x < 4; x++)
-                {
-                    led_cube.leds.current_color.set_colour("blue");
-                    led_cube.leds.make_wall_x(x);
-                    led_cube.push_to_hardware();
-                    Thread.Sleep(500);
-                    led_cube.all_off();
-                    led_cube.leds.clear();
-                }
-                for (int z= 0; z < 4; z++)
-                {
-                    led_cube.leds.current_color.set_colour("green");
-                    led_cube.leds.make_floor(z);
-                    led_cube.push_to_hardware();
-                    Thread.Sleep(500);
-                    led_cube.all_off();
-                    led_cube.leds.clear();
-                }
+            {
+                led_cube.add_moisture();
+                Thread.Sleep(50);
+               // if (rnd.Next(1,5) ==4)
+                   led_cube.moisture_falls_at_value(100);
+               // Thread.Sleep(50);
+
             }
             //led_cube.random_colors();
             //led_cube.rain(500);

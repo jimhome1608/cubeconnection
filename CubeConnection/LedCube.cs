@@ -16,20 +16,79 @@ namespace CubeConnection
         Led all_leds;
         public LedList leds = new LedList();
 
+        private Random rnd = new Random();
 
-       public LedCube()
+
+        public LedCube()
         {
             all_leds = new Led();
             all_leds.x = ALL_LEDS_X;
         }
 
+        public void add_moisture()
+        {
+            
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 4; y++)
+                {
+                    Led l = leds.led_by_address(x, y, 3);
+                    Led l2 = leds.led_by_address(x+1, y, 3);
+                    if (l2 == null)
+                        l2 = leds.led_by_address(x - 1, y, 3);
+                    if (l2.blue == 0)
+                    {
+                        l2.blue = 10;
+                        l2.color_has_changed = true;
+                    }
+                        
+                    l.blue = l.blue + rnd.Next(0, l2.blue);
+                    if (l.blue > 255)
+                        l.blue = 255;
+                    l.color_has_changed = true;
+                }
+            }
+            push_to_hardware(false);
+            
+        }
+
+        public void moisture_falls_at_value(int _falling_value)
+        {
+            // search on the ground and make dissapear
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y=0;y<4;y++)
+                {
+                    Led l = leds.led_by_address(x, y, 0);
+                    if (l.blue >= _falling_value)
+                        l.turn_off();
+                }
+            }
+            for (int z=1; z < 4; z++) { 
+                for (int x = 0; x < 4; x++)
+                {
+                    for (int y = 0; y < 4; y++)
+                    {
+                        Led l = leds.led_by_address(x, y, z);
+                        if (l.blue >= _falling_value)
+                        {
+                            Led l2 = leds.led_by_address(x, y, z-1);
+                            l2.assign_color(l);
+                            l.turn_off();
+                        }                        
+                    }
+                }
+            }
+            push_to_hardware(false);
+
+        }
 
         public void random_colors()
         {
             for (int l=0; l< 64; l++)
             {
                 leds.leds[l].set_random_color();
-                push_to_hardware();
+                push_to_hardware(false);
             }
             
 
@@ -38,7 +97,7 @@ namespace CubeConnection
         public Boolean x_line(int y, int z)
         {
             leds.x_line(y, z);
-            push_to_hardware();
+            push_to_hardware(false);
             return true;
         }
 
@@ -48,7 +107,7 @@ namespace CubeConnection
         }
 
 
-        public void push_to_hardware()
+        public void push_to_hardware(Boolean force_all)
         {
             String _cmd = "";
             Led _led;
@@ -56,8 +115,18 @@ namespace CubeConnection
             serial_port.Write(all_leds.cmd());
             for (int x = 0; x < leds.leds.Count; x++)
             {
-                _led = leds.leds[x];
-                _cmd = _cmd + _led.cmd();
+                if (force_all)
+                {
+                    _led = leds.leds[x];
+                    _cmd = _cmd + _led.cmd();
+                }
+                else
+                {
+                    _led = leds.leds[x];
+                    if (_led.color_has_changed)
+                      _cmd = _cmd + _led.cmd();
+                }
+
             }
             serial_port.Write(_cmd);
 
