@@ -21,19 +21,21 @@ namespace CubeConnection
                 Console.ReadKey();
                 return;
             }
+            
             //play_game();
             //led_cube.leds.make_floor(2);
             // led_cube.random_colors();
             //led_cube.push_to_hardware();
             //Thread.Sleep(5000);
-            
+
             while (!Console.KeyAvailable)
             {
-                led_cube.add_moisture();
-                Thread.Sleep(50);
-               // if (rnd.Next(1,5) ==4)
-                   led_cube.moisture_falls_at_value(100);
-               // Thread.Sleep(50);
+                led_cube.rain_drop();
+                //led_cube.add_moisture();
+                //Thread.Sleep(50);
+                // if (rnd.Next(1,5) ==4)
+                //   led_cube.moisture_falls_at_value(200);
+                // Thread.Sleep(50);
 
             }
             //led_cube.random_colors();

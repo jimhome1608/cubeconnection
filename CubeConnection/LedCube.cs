@@ -25,26 +25,77 @@ namespace CubeConnection
             all_leds.x = ALL_LEDS_X;
         }
 
-        public void add_moisture()
+        public void rain_drop()
         {
-            
             for (int x = 0; x < 4; x++)
             {
                 for (int y = 0; y < 4; y++)
                 {
                     Led l = leds.led_by_address(x, y, 3);
-                    Led l2 = leds.led_by_address(x+1, y, 3);
-                    if (l2 == null)
-                        l2 = leds.led_by_address(x - 1, y, 3);
-                    if (l2.blue == 0)
+                    if (l.blue == 0)
+                        l.blue = 250;
+                    l.color_has_changed = true;
+
+                    push_to_hardware(false);
+                }
+            }
+
+                
+           while (leds.led_by_address(0, 0, 3).blue > 0 )
+           {            
+                for (int y = 0; y < 4; y++)
+                {
+                    for (int x = 0; x < 4; x++)
                     {
-                        l2.blue = 10;
-                        l2.color_has_changed = true;
+                       // while (leds.led_by_address(x, y, 2).blue < 255)
+                       // {
+                            if (leds.led_by_address(x, y, 3).add_colour(0, 0, -50))
+                              leds.led_by_address(x, y, 2).add_colour(0, 0, 50);
+                            //push_to_hardware(false);
+                       // }
+                       // while (leds.led_by_address(x, y, 1).blue < 255)
+                       // {
+                            if (leds.led_by_address(x, y, 2).add_colour(0, 0, -50))
+                               leds.led_by_address(x, y, 1).add_colour(0, 0, 50);
+                            //push_to_hardware(false);
+                        //}
+                        //while (leds.led_by_address(x, y, 0).blue < 255)
+                       // {
+                            if (leds.led_by_address(x, y, 1).add_colour(0, 0, -50))
+                                leds.led_by_address(x, y, 0).add_colour(0, 0, 50);
+                        //push_to_hardware(false);
+                        //}
+                        leds.led_by_address(x, y, 0).add_colour(0, 0, -50);
+                        //leds.led_by_address(x, y, 0).turn_off();
+                    
                     }
-                        
-                    l.blue = l.blue + rnd.Next(0, l2.blue);
-                    if (l.blue > 255)
-                        l.blue = 255;
+                    push_to_hardware(false);
+                    Thread.Sleep(100);
+                }
+           }
+        }
+
+
+        public void add_moisture()
+        {
+
+            
+            for (int x = 0; x < 1; x++)
+            {
+                for (int y = 0; y < 1; y++)
+                {
+                 
+                   if (rnd.Next(0,2) == 1)
+                        continue;
+                    Led l = leds.led_by_address(x, y, 3);
+                    if (leds.led_by_address(x, y, 2).blue > 0)
+                        l.blue = 0;
+                    else
+                    {
+                        l.blue = l.blue + 50;
+                        if (l.blue > 255)
+                            l.blue = 255;
+                    }
                     l.color_has_changed = true;
                 }
             }
@@ -55,6 +106,7 @@ namespace CubeConnection
         public void moisture_falls_at_value(int _falling_value)
         {
             // search on the ground and make dissapear
+            int source_blue = 0;
             for (int x = 0; x < 4; x++)
             {
                 for (int y=0;y<4;y++)
@@ -70,12 +122,22 @@ namespace CubeConnection
                     for (int y = 0; y < 4; y++)
                     {
                         Led l = leds.led_by_address(x, y, z);
-                        if (l.blue >= _falling_value)
+                        if ( z == 3)
                         {
-                            Led l2 = leds.led_by_address(x, y, z-1);
-                            l2.assign_color(l);
-                            l.turn_off();
-                        }                        
+                            if (l.blue < _falling_value)
+                                continue;
+                        }
+                        source_blue = l.blue;
+                        source_blue = source_blue - 50;
+                        if (source_blue < 0)
+                            source_blue = l.blue;
+                        l.blue = l.blue - source_blue;
+                        Led l2 = leds.led_by_address(x, y, z-1);
+                        l2.blue = l2.blue + source_blue;
+                        if (l2.blue > 255)
+                            l2.blue = 255;
+                        l.color_has_changed = true;
+                        l2.color_has_changed = true;
                     }
                 }
             }
